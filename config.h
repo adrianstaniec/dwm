@@ -66,8 +66,10 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *roficmd[] = { "rofi", "-show", "run", "-theme", "solarized", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *roficmd[] = { "rofi", "-show", "run", "-theme", "solarized", NULL };
 static const char *editor[]  = { "st", "-e", "nvim", NULL };
 static const char *editor2[]  = { "code", NULL };
 static const char *rofi_websearch[]  = { "rofi-surfraw-websearch.sh", NULL };
@@ -88,6 +90,7 @@ static Key keys[] = {
 	{ MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
   /* top row */
+	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
   /* qwerty row */
