@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -37,11 +39,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	/* class       instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Audacious", NULL,     NULL,           1 << 8,    0,          1,           0,        -1 },
+	{ "Gimp",      NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "St",        NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,        NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -132,6 +134,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
+  /* multimedia */
+	{ 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("pactl set-sink-volume 0 +5%")},
+	{ 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("pactl set-sink-volume 0 -5%")},
+	{ 0,                            XF86XK_AudioMute,          spawn,  SHCMD("pactl set-sink-mute 0 toggle")},
+	{ 0,                            XF86XK_AudioPrev,          spawn,  SHCMD("audacious -r")},
+	{ 0,                            XF86XK_AudioNext,          spawn,  SHCMD("audacious -f")},
+	{ 0,                            XF86XK_AudioPlay,          spawn,  SHCMD("audacious -t")},
+	{ 0,                            XF86XK_AudioStop,          spawn,  SHCMD("audacious -s")},
   /* tagkeys */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
