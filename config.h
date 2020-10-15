@@ -14,13 +14,13 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Liberation Mono:pixelsize=17:antialias=true:autohint=true" };
+static const char *fonts[]          = { "UbuntuMono Nerd Font Mono:pixelsize=18:antialias=true:autohint=true" };
 static const char dmenufont[]       = "Liberation Mono:pixelsize=17:antialias=true:autohint=true";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#2eb398";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -35,9 +35,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class                  instance    title       tags mask     isfloating   monitor */
+	{ "Blueman-manager",      NULL,       NULL,       0,            0,           -1 },
+	{ "Pavucontrol",          NULL,       NULL,       0,            0,           -1 },
+	{ "Gimp",                 NULL,       NULL,       0,            0,           -1 },
+	{ "Firefox",              NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -47,8 +49,8 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[T]",      tile },    /* first entry is default */
+	{ "[F]",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
 
@@ -69,17 +71,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-static const char *roficmd[] = { "rofi", "-show", "run", "-theme", "solarized", NULL };
-static const char *editor[]  = { "st", "-e", "nvim", NULL };
-static const char *editor2[]  = { "code", NULL };
-static const char *rofi_websearch[]  = { "rofi-surfraw-websearch.sh", NULL };
-static const char *rofi_nerd[]  = { "rofi-nerd.sh", "1", NULL };
-static const char *rofi_google[]  = { "rofi-surfraw-google.sh", NULL };
-static const char *rofi_books[]  = { "rofi-open-pdf.sh", "~/Dropbox/Books/", NULL };
-static const char *rofi_papers[]  = { "rofi-open-pdf.sh", "~/Dropbox/Papers/", NULL };
 /* static const char *rofi_xdg[]  = { "rofi-xdg_open.sh", "~/Documents", NULL }; */
-static const char *rofi_bookmarks[]  = { "rofi-surfraw-bookmars.sh", NULL };
-static const char *rofi_configs[]  = { "rofi-config-bookmars.sh", NULL };
 
 
 static Key keys[] = {
@@ -98,30 +90,35 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
-	{ MODKEY,                       XK_e,      spawn,          {.v = editor } },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = editor2 } },
+	{ MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("~/bin/set-random-wallpaper.sh") },
+	{ MODKEY,                       XK_e,      spawn,          SHCMD("st -e nvim") },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("code") },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("~/bin/set-theme2.sh") },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_i,      spawn,          {.v = rofi_nerd } },
-	{ MODKEY,                       XK_o,      spawn,          {.v = rofi_books } },
-	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = rofi_papers } },
-	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_i,      spawn,          SHCMD("~/bin/rofi-nerd.sh 1") },
+	{ MODKEY,                       XK_o,      spawn,          SHCMD("~/bin/rofi-open-pdf.sh ~/Dropbox/Books") },
+	{ MODKEY|ShiftMask,             XK_o,      spawn,          SHCMD("rofi-xdg-open.sh ~/projects/") },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("~/bin/rofi-open-pdf.sh ~/Dropbox/Papers") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("~/bin/getpaper.py") },
   /* asdf row */
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_a,      incnmaster,     {.i = 1 } },
+	{ MODKEY,                       XK_d,      spawn,          SHCMD("rofi -show run") },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_g,      spawn,          {.v = rofi_google } },
-	{ MODKEY|ShiftMask,             XK_g,      spawn,          {.v = rofi_websearch } },
+	{ MODKEY,                       XK_g,      spawn,          SHCMD("~/bin/rofi-surfraw-google.sh") },
+	{ MODKEY|ShiftMask,             XK_g,      spawn,          SHCMD("~/bin/rofi-surfraw-websearch.sh") },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
   /* zxcv row */
-	{ MODKEY,                       XK_c,      spawn,          {.v = rofi_configs} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_b,      spawn,          {.v = rofi_bookmarks} },
+	{ MODKEY,                       XK_x,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_c,      spawn,          SHCMD("~/bin/rofi-config-bookmarks.sh") },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("~/bin/toggle-compositor.sh") },
+	{ MODKEY,                       XK_b,      spawn,          SHCMD("~/bin/rofi-surfraw-bookmarks.sh") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -129,7 +126,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
   /* bottom row */
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
+/* { MODKEY,                       XK_space,  setlayout,      {0} }, */
+	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
   /* tagkeys */
 	TAGKEYS(                        XK_1,                      0)
