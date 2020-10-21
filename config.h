@@ -19,15 +19,17 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "UbuntuMono Nerd Font Mono:pixelsize=18:antialias=true:autohint=true" };
 static const char dmenufont[]       = "Liberation Mono:pixelsize=17:antialias=true:autohint=true";
 static char normbgcolor[]           = "#222222";
-static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
+static char normbordercolor[]       = "#444444";
+static char normfloatbordercolor[]  = "#555555";
+static char selbgcolor[]            = "#005577";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
-static char selbgcolor[]            = "#005577";
-static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+static char selfloatbordercolor[]   = "#335577";
+static char *colors[][4] = {
+       /*               fg           bg           border           float border         */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor, normfloatbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor , selfloatbordercolor },
 };
 
 /* tagging */
