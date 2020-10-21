@@ -22,14 +22,16 @@ static char normbgcolor[]           = "#222222";
 static char normfgcolor[]           = "#bbbbbb";
 static char normbordercolor[]       = "#444444";
 static char normfloatbordercolor[]  = "#555555";
+static char normstickybordercolor[] = "#666666";
 static char selbgcolor[]            = "#005577";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
 static char selfloatbordercolor[]   = "#335577";
-static char *colors[][4] = {
-       /*               fg           bg           border           float border         */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor, normfloatbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor , selfloatbordercolor },
+static char selstickybordercolor[]  = "#337799";
+static char *colors[][5] = {
+       /*               fg           bg           border           float border           sticky border         */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor, normfloatbordercolor,  normstickybordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor , selfloatbordercolor ,  selstickybordercolor},
 };
 
 /* tagging */
