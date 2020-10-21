@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -30,6 +32,14 @@ static char *colors[][3] = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+/* launcher commands (They must be NULL terminated) */
+static const char* surf[]      = { "brave", "duckduckgo.com", NULL };
+
+static const Launcher launchers[] = {
+	/* command    name to display */
+	{ surf,         "surfer" },
+};
 
 static const Rule rules[] = {
 	/* xprop(1):
