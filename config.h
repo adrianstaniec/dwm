@@ -119,6 +119,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("~/bin/getpaper.py") },
   /* asdf row */
 	{ MODKEY,                       XK_a,      incnmaster,     {.i = 1 } },
+	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_d,      spawn,          SHCMD("rofi -show run") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
