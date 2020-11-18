@@ -69,7 +69,9 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
-	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } },
+	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD, XK_Down,  ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_Up,    ACTION##stack, {.i = INC(-1) } },
 
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -123,7 +125,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("~/bin/getpaper.py") },
   /* asdf row */
 	{ MODKEY,                       XK_a,      incnmaster,     {.i = 1 } },
-	{ MODKEY,                       XK_s,      togglesticky,   {0} },
+	{ MODKEY,                       XK_s,      spawn,          SHCMD("~/bin/greenshot.sh") },
+	{ MODKEY|ShiftMask,             XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_d,      spawn,          SHCMD("rofi -show run") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
