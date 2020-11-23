@@ -152,10 +152,22 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
+
   /* multimedia */
-	{ 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("pactl set-sink-volume 0 +5%")},
-	{ 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("pactl set-sink-volume 0 -5%")},
-	{ 0,                            XF86XK_AudioMute,          spawn,  SHCMD("pactl set-sink-mute 0 toggle")},
+  // pactl
+	/* { 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("pactl set-sink-volume 0 +5%")}, */
+	/* { 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("pactl set-sink-volume 0 -5%")}, */
+	/* { 0,                            XF86XK_AudioMute,          spawn,  SHCMD("pactl set-sink-mute 0 toggle")}, */
+  // amixer
+	/* { 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("amixer -D pulse sset Master 5%+")}, */
+	/* { 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("amixer -D pulse sset Master 5%-")}, */
+  // pamixer
+	{ MODKEY,                       XK_equal,                  spawn,  SHCMD("pamixer --allow-boost -i 5")},
+	{ MODKEY,                       XK_minus,                  spawn,  SHCMD("pamixer --allow-boost -d 5")},
+	{ 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("pamixer --allow-boost -i 5")},
+	{ 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("pamixer --allow-boost -d 5")},
+	{ 0,                            XF86XK_AudioMute,          spawn,  SHCMD("pamixer -t")},
+  // player
 	{ 0,                            XF86XK_AudioPrev,          spawn,  SHCMD("audacious -r")},
 	{ 0,                            XF86XK_AudioNext,          spawn,  SHCMD("audacious -f")},
 	{ 0,                            XF86XK_AudioPlay,          spawn,  SHCMD("audacious -t")},
