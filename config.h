@@ -58,6 +58,8 @@ static const Layout layouts[] = {
 	{ "[T]",      tile },    /* first entry is default */
 	{ "[F]",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "TTT",      bstack },
+	{ "===",      bstackhoriz },
 };
 
 /* key definitions */
@@ -117,6 +119,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("code") },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("~/bin/set-theme2.sh") },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_i,      spawn,          SHCMD("~/bin/rofi-nerd.sh 1") },
 	{ MODKEY,                       XK_o,      spawn,          SHCMD("~/bin/rofi-open-pdf.sh ~/Dropbox/Books") },
@@ -133,7 +137,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_g,      spawn,          SHCMD("~/bin/rofi-surfraw-google.sh") },
 	{ MODKEY|ShiftMask,             XK_g,      spawn,          SHCMD("~/bin/rofi-surfraw-websearch.sh") },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_Left,   setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_Right,  setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
   /* zxcv row */
