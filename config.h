@@ -43,7 +43,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class       instance  title           tags mask  isfloating  monitor */
-	{ "Audacious", NULL,     NULL,           1 << 8,    0,          -1 },
+	/* { "Audacious", NULL,     NULL,           1 << 8,    0,          -1 }, */
 	{ "Gimp",      NULL,     NULL,           0,         1,          -1 },
 	{ "St",        NULL,     NULL,           0,         0,          -1 },
 };
@@ -168,11 +168,11 @@ static Key keys[] = {
 	/* { 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("amixer -D pulse sset Master 5%+")}, */
 	/* { 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("amixer -D pulse sset Master 5%-")}, */
   // pamixer
-	{ MODKEY,                       XK_equal,                  spawn,  SHCMD("pamixer --allow-boost -i 5")},
-	{ MODKEY,                       XK_minus,                  spawn,  SHCMD("pamixer --allow-boost -d 5")},
-	{ 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("pamixer --allow-boost -i 5")},
-	{ 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("pamixer --allow-boost -d 5")},
-	{ 0,                            XF86XK_AudioMute,          spawn,  SHCMD("pamixer -t")},
+	{ MODKEY,                       XK_equal,                  spawn,  SHCMD("pamixer --sink 7 -i 5")},
+	{ MODKEY,                       XK_minus,                  spawn,  SHCMD("pamixer --sink 7 -d 5")},
+	{ 0,                            XF86XK_AudioRaiseVolume,   spawn,  SHCMD("pamixer --sink 7 -i 5")},
+	{ 0,                            XF86XK_AudioLowerVolume,   spawn,  SHCMD("pamixer --sink 7 -d 5")},
+	{ 0,                            XF86XK_AudioMute,          spawn,  SHCMD("pamixer --sink 7 -t")},
   // player
 	{ 0,                            XF86XK_AudioPrev,          spawn,  SHCMD("audacious -r")},
 	{ 0,                            XF86XK_AudioNext,          spawn,  SHCMD("audacious -f")},
