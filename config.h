@@ -74,27 +74,28 @@ static const Layout layouts[] = {
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
 	{ MOD, XK_Down,  ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_Up,    ACTION##stack, {.i = INC(-1) } },
+#define PrintScreenKey    0x0000ff61
 
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]       = { "st", NULL };
-static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-/* static const char *rofi_xdg[]   = { "rofi-xdg_open.sh", "~/Documents", NULL }; */
-static const char* vk[]            = { "svkbd-mobile-intl", NULL };
-static const char* dummy[]         = { "st", "-e", "bat", "/github/suckless/dwm/config.h", NULL };
+static char dmenumon[2] = "0"; /* component of cmddmenu, manipulated in spawn() */
+static const char scratchpadname[]  = "scratchpad";
+static const char *scratchpadcmd[]  = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+/* static const char *rofi_xdg[]    = { "rofi-xdg_open.sh", "~/Documents", NULL }; */
+static const char *cmddmenu[]       = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+static const char *cmdterm[]        = { "st", NULL };
+static const char* cmdvk[]             = { "svkbd-mobile-intl", NULL };
+static const char* cmddummy[]          = { "st", "-e", "bat", "/github/suckless/dwm/config.h", NULL };
 
 static const Launcher launchers[] = {
 	/* command    name to display */
-	{ dummy,      "|"},
-	{ dmenucmd,   "" },
-	{ termcmd,    "" },
-	{ vk,         "" },
+	{ cmddummy,   "|" },
+	{ cmddmenu,   "" },
+	{ cmdterm,    "" },
+	{ cmdvk,      "" },
 };
 
 
@@ -129,10 +130,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("~/bin/getpaper.py") },
   /* asdf row */
 	{ MODKEY,                       XK_a,      incnmaster,     {.i = 1 } },
-	{ MODKEY,                       XK_s,      spawn,          SHCMD("~/bin/greenshot.sh") },
+	{ MODKEY,                       XK_s,      spawn,          SHCMD("~/bin/greenscrot.sh") },
 	{ MODKEY|ShiftMask,             XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_d,      spawn,          SHCMD("rofi -show run") },
-	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = cmddmenu } },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_g,      spawn,          SHCMD("~/bin/rofi-surfraw-google.sh") },
 	{ MODKEY|ShiftMask,             XK_g,      spawn,          SHCMD("~/bin/rofi-surfraw-websearch.sh") },
@@ -140,7 +141,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Left,   setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Right,  setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = cmdterm } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
   /* zxcv row */
 	{ MODKEY,                       XK_x,      incnmaster,     {.i = -1 } },
@@ -178,6 +179,8 @@ static Key keys[] = {
 	{ 0,                            XF86XK_AudioNext,          spawn,  SHCMD("audacious -f")},
 	{ 0,                            XF86XK_AudioPlay,          spawn,  SHCMD("audacious -t")},
 	{ 0,                            XF86XK_AudioStop,          spawn,  SHCMD("audacious -s")},
+  /* top corner */
+	{ 0,                            PrintScreenKey,            spawn,  SHCMD("greenscrot.sh")},
   /* tagkeys */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
@@ -201,7 +204,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button2,        spawn,          {.v = cmdterm } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
